@@ -40,7 +40,7 @@ const Todo = mongoose.model("Todo", {
 // Routes
 // Serve todo.html
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 // Endpoint om een nieuwe categorie toe te voegen
