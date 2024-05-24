@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // MongoDB connection
 mongoose
-  .connect(process.mongodb+srv://timvannieuwkerk:QHgwFPmLbM0NZBcv@todocluster.fsw0fu1.mongodb.net/?retryWrites=true&w=majority&appName=todocluster, {
+  .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
