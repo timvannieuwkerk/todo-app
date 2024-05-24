@@ -1,0 +1,395 @@
+:root {
+  --primary: #23ba28;
+  --title: #223121;
+  --text: #555555;
+  --background: #fffafa;
+  --border: #b3afaf;
+  --shadowcolor: #b2b2b2;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+}
+
+main {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: minmax(100px, auto);
+  gap: 5px;
+}
+
+.greeting {
+  grid-column: 1 / 4;
+  grid-row: 1;
+  /* place-content: center;
+  text-align: center; */
+  font-size: 2.5rem;
+  font-weight: 500;
+  padding: 2rem;
+  border-bottom: 1px dashed var(--border);
+}
+
+.make-to-do-item {
+  grid-column: 1 / 4;
+  grid-row: 2;
+  padding: 2rem;
+}
+
+.to-do-overview {
+  grid-column: 1 / 4;
+  grid-row: 3;
+  padding: 2rem;
+}
+
+h1,
+h2,
+h4,
+h5 {
+  color: var(--title);
+}
+
+h2 {
+  padding-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+h4 {
+  padding-bottom: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.make-to-do-item input {
+  font-size: 1.2rem;
+  width: 100%;
+  padding: 7px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  color: var(--text);
+  background-color: #ffffff;
+  display: flex;
+}
+
+#date {
+  position: relative;
+}
+
+#date::-webkit-calendar-picker-indicator {
+  position: absolute;
+  cursor: pointer;
+  background: transparent;
+  height: 100%;
+  width: 100%;
+  left: -1px;
+}
+
+/* #date::after {
+  content: "\f073";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #555;
+} */
+
+::placeholder {
+  color: var(--shadowcolor);
+}
+
+/* .options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 20px;
+} */
+
+/* .options label {
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #ffffff;
+  padding: 0.5rem;
+} */
+
+#submit {
+  margin: 0;
+  background-color: var(--primary);
+  color: #ffffff;
+  border: 2px solid var(--primary);
+  font-weight: 500;
+}
+
+#submit:hover {
+  background-color: #ffffff;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.todo-item {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  background-color: #ffffff;
+  display: flex;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* .todo-item label {
+  padding: 0px 7px 0px 14px;
+  align-self: center;
+} */
+
+.text {
+  font-size: 1.2rem;
+  border: none;
+  padding: 7px;
+  border: none;
+  background-color: transparent;
+  width: 200px;
+  flex-grow: 1;
+  flex-shrink: 0;
+  color: #000;
+}
+
+.date-todo {
+  border: none;
+  background-color: transparent;
+  padding: 0px 14px 0px 7px;
+  font-size: 1.2rem;
+  width: 200px;
+  flex-shrink: 1;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+}
+
+.read-only {
+  background-color: #f2f2f2;
+}
+.categories-menu {
+  position: relative;
+}
+
+.categories-menu button,
+input {
+  font-size: 1.2rem;
+  width: 100%;
+  padding: 7px;
+  color: var(--text);
+  background-color: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex;
+  /* margin-bottom: 0px; */
+  position: relative;
+}
+/* 
+#category {
+  color: var(--shadowcolor);
+} */
+
+.border {
+  border: 2px solid black !important;
+  padding: 6px !important;
+}
+
+.categories-choose {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  /* color: var(--shadowcolor); */
+}
+
+.grijs {
+  color: var(--shadowcolor) !important;
+}
+
+.categories-choose:hover {
+  cursor: pointer;
+}
+
+@keyframes growDown {
+  0% {
+    transform: scaleY(0);
+  }
+  80% {
+    transform: scaleY(1.1);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+.categories-options {
+  position: absolute;
+  background-color: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  width: 100%;
+  z-index: 1;
+  top: 77px;
+  animation: growDown 0.3s ease-in-out forwards;
+  transform-origin: top center;
+}
+
+.categories-options button {
+  border: none;
+  cursor: pointer;
+}
+
+.categories-options button:hover {
+  text-decoration: underline;
+}
+
+.hidden {
+  display: none !important;
+}
+
+h5 {
+  position: absolute;
+  top: 590px;
+  left: 40px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: red;
+}
+
+.fa-pen-to-square,
+.fa-floppy-disk {
+  font-size: 1.3rem;
+  margin: 8px 20px 8px 10px;
+}
+
+.fa-trash-can {
+  font-size: 1.3rem;
+  margin: 8px 10px 8px 0px;
+}
+
+.fa-pen-to-square:hover {
+  cursor: pointer;
+  color: orange;
+}
+
+.fa-floppy-disk:hover {
+  cursor: pointer;
+  color: green;
+}
+
+.fa-trash-can:hover {
+  cursor: pointer;
+  color: red;
+}
+
+.fa-square-plus {
+  font-size: 1.3rem;
+  margin: 8px 21px 8px 0px;
+  z-index: 2;
+}
+
+.fa-square-plus:hover {
+  cursor: pointer;
+  color: blue;
+}
+
+@media (max-width: 550px) {
+  .todo-item {
+    display: grid;
+    width: 100%;
+    height: 80px;
+    grid-template-rows: 40px 40px;
+    grid-template-columns: 1fr repeat(2, 40px);
+    grid-template-areas:
+      "text text text"
+      "date edit delete";
+  }
+
+  .text {
+    grid-area: text;
+    width: 100%;
+  }
+
+  .date-todo {
+    grid-area: date;
+  }
+
+  .fa-trash-can {
+    grid-area: delete;
+    position: relative;
+    padding: 9px;
+    margin: 0;
+  }
+
+  .fa-pen-to-square,
+  .fa-floppy-disk {
+    grid-area: edit;
+    position: relative;
+    padding: 9px;
+    margin: 0;
+  }
+}
+
+.categorie-nieuw {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.nieuw {
+  position: absolute;
+  padding: 7px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  background-color: #ffffff;
+  right: 0px;
+  top: 0px;
+  z-index: 1;
+}
+
+.nieuw input {
+  margin: 0;
+}
+
+.nieuw h4 {
+  margin: 0;
+}
+
+.fa-square-check {
+  position: absolute;
+  top: 40px;
+  right: 10px;
+  font-size: 1.3rem;
+  margin: 8px 10px 8px 0px;
+}
+
+.fa-square-check:hover {
+  color: green;
+  cursor: pointer;
+}
+
+.red-delete {
+  color: red;
+}
+
+.red-delete:hover {
+  color: red;
+  cursor: pointer;
+}
