@@ -3,9 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const dotenv = require("dotenv");
-
-dotenv.config();
+const path = require("path");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -13,6 +11,7 @@ const port = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "public")));
 
 // MongoDB connection
 mongoose
@@ -27,15 +26,69 @@ mongoose
     console.error("Connection error", err);
   });
 
-const todoSchema = new mongoose.Schema({
+// MongoDB models
+const Category = mongoose.model("Category", {
+  category: String,
+});
+
+const Todo = mongoose.model("Todo", {
   title: String,
   category: String,
   date: String,
 });
 
-const Todo = mongoose.model("Todo", todoSchema);
+// Routes
+// Serve todo.html
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "todo.html"));
+});
 
-// Endpoint om een nieuwe to-do item toe te voegen
+// Endpoint om een nieuwe categorie toe te voegen
+app.post("/categories", async (req, res) => {
+  try {
+    const newCategory = new Category(req.body);
+    const savedCategory = await newCategory.save();
+    res.status(201).json(savedCategory);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// Endpoint om alle categorieën op te halen
+app.get("/categories", async (req, res) => {
+  try {
+    const categories = await Category.find();
+    res.json(categories);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Endpoint om een bestaande categorie bij te werken
+app.put("/categories/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const updatedCategory = await Category.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    res.json(updatedCategory);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// Endpoint om een categorie te verwijderen
+app.delete("/categories/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Category.findByIdAndDelete(id);
+    res.json({ message: "Category deleted successfully" });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// Endpoint om een nieuwe taak toe te voegen
 app.post("/todos", async (req, res) => {
   try {
     const newTodo = new Todo(req.body);
@@ -46,6 +99,7 @@ app.post("/todos", async (req, res) => {
   }
 });
 
+// Endpoint om alle taken op te halen
 app.get("/todos", async (req, res) => {
   try {
     const todos = await Todo.find();
@@ -55,6 +109,7 @@ app.get("/todos", async (req, res) => {
   }
 });
 
+// Endpoint om een bestaande taak bij te werken
 app.put("/todos/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -67,6 +122,7 @@ app.put("/todos/:id", async (req, res) => {
   }
 });
 
+// Endpoint om een taak te verwijderen
 app.delete("/todos/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -77,11 +133,7 @@ app.delete("/todos/:id", async (req, res) => {
   }
 });
 
-// Sample route
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
+// Start server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
