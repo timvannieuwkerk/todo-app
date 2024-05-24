@@ -401,4 +401,3 @@ async function handleClick(categoryId) {
     console.error("Error:", error);
   }
 }
-
