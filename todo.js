@@ -354,10 +354,17 @@ function CheckIfCategoryIsEmpty() {
         .then((todos) => {
           const categoryOptionsTitlesNew =
             document.querySelectorAll(".to-do-category h4");
-          console.log(categoryOptionsTitlesNew);
 
           for (let i = 0; i < categoryOptionsTitlesNew.length; i++) {
             const categoryTitle = categoryOptionsTitlesNew[i].innerText;
+            const categoryId = categoryOptionsTitlesNew[i].dataset.categoryId;
+
+            // Verwijder de eventlistener voordat deze opnieuw wordt toegevoegd
+            categoryOptionsTitlesNew[i].removeEventListener(
+              "click",
+              handleClick(categoryId)
+            );
+
             if (!todos.some((todo) => todo.category === categoryTitle)) {
               categoryOptionsTitlesNew[i].classList.add("red-delete");
               categoryOptionsTitlesNew[i].addEventListener(
