@@ -354,6 +354,7 @@ function CheckIfCategoryIsEmpty() {
         .then((todos) => {
           const categoryOptionsTitlesNew =
             document.querySelectorAll(".to-do-category h4");
+          console.log(categoryOptionsTitlesNew);
 
           for (let i = 0; i < categoryOptionsTitlesNew.length; i++) {
             const categoryTitle = categoryOptionsTitlesNew[i].innerText;
