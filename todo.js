@@ -101,7 +101,6 @@ async function addTodo(title, category, date) {
       throw new Error("Failed to add new todo");
     }
     const data = await response.json();
-    console.log("New todo added:", data);
     DisplayTodos(); // Update todos display
   } catch (error) {
     console.error("Error adding todo:", error);
@@ -355,6 +354,7 @@ function CheckIfCategoryIsEmpty() {
         .then((todos) => {
           const categoryOptionsTitlesNew =
             document.querySelectorAll(".to-do-category h4");
+          console.log(categoryOptionsTitlesNew);
 
           for (let i = 0; i < categoryOptionsTitlesNew.length; i++) {
             const categoryTitle = categoryOptionsTitlesNew[i].innerText;
