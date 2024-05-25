@@ -362,7 +362,7 @@ function CheckIfCategoryIsEmpty() {
               categoryOptionsTitlesNew[i].classList.add("red-delete");
               categoryOptionsTitlesNew[i].addEventListener(
                 "click",
-                function () {
+                function handleClick() {
                   const categoryId = this.dataset.categoryId;
                   handleClick(categoryId);
                 }
