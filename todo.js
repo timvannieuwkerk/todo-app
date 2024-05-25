@@ -55,7 +55,8 @@ function UpdateNewCategory() {
       newCategoryMenu.classList.toggle("hidden");
     } else {
       try {
-        const response = await fetch("/categories", {
+        const response = await fetch("/.netlify/functions/addCategory", {
+          // Aanroep naar de Netlify Function
           method: "POST",
           headers: {
             "Content-Type": "application/json",
