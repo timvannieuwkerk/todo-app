@@ -1,3 +1,6 @@
+const MONGODB_URI =
+  "mongodb+srv://timvannieuwkerk:QHgwFPmLbM0NZBcv@todocluster.fsw0fu1.mongodb.net/?retryWrites=true&w=majority&appName=todocluster";
+
 const mongoose = require("mongoose");
 require("dotenv").config();
 
@@ -7,7 +10,7 @@ const Todo = mongoose.model("Todo", {
   date: String,
 });
 
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
