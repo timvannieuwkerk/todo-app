@@ -56,7 +56,6 @@ function UpdateNewCategory() {
     } else {
       try {
         const response = await fetch("/.netlify/functions/addCategory", {
-          // Aanroep naar de Netlify Function
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -276,16 +275,13 @@ function DisplayTodos() {
                 date: newDate.value,
               };
 
-              const response = await fetch(
-                `/.netlify/functions/updateTodo/${todo._id}`,
-                {
-                  method: "PUT",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify(updatedTodo),
-                }
-              );
+              const response = await fetch(`/.netlify/functions/updateTodo`, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ id: todo._id, ...updatedTodo }),
+              });
 
               if (!response.ok) {
                 throw new Error("Failed to update todo");
@@ -305,12 +301,13 @@ function DisplayTodos() {
 
         deleteButton.addEventListener("click", async () => {
           try {
-            const response = await fetch(
-              `/.netlify/functions/deleteTodo/${todo._id}`,
-              {
-                method: "DELETE",
-              }
-            );
+            const response = await fetch(`/.netlify/functions/deleteTodo`, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ id: todo._id }),
+            });
 
             if (!response.ok) {
               throw new Error("Failed to delete todo");
@@ -370,10 +367,8 @@ function CheckIfCategoryIsEmpty() {
                   handleClick(categoryId);
                 }
               );
-              // console.log(categoryOptionsTitlesNew[i].dataset.categoryId);
             } else {
               categoryOptionsTitlesNew[i].classList.remove("red-delete");
-              // If needed, remove any previously added event listener
               categoryOptionsTitlesNew[i].removeEventListener(
                 "click",
                 handleClick
@@ -391,22 +386,18 @@ async function handleClick(categoryId) {
   console.log(categoryId);
 
   try {
-    const response = await fetch(
-      `/.netlify/functions/deleteCategory/${categoryId}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ category: categoryId }),
-      }
-    );
+    const response = await fetch(`/.netlify/functions/deleteCategory`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: categoryId }),
+    });
     if (!response.ok) {
       throw new Error("Failed to delete category");
     }
     console.log(`Category "${categoryId}" deleted successfully.`);
     DisplayCategories();
-    // Handle UI update or removal of the category from the UI
   } catch (error) {
     console.error("Error:", error);
   }
