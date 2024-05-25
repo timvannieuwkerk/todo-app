@@ -91,7 +91,7 @@ function OpenDateMenu() {
 
 async function addTodo(title, category, date) {
   try {
-    const response = await fetch("/todos", {
+    const response = await fetch("/.netlify/functions/addTodo", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -147,7 +147,7 @@ function CloseOpenFields() {
 // B: Displayfunctions
 
 function DisplayCategories() {
-  fetch("/categories")
+  fetch("/.netlify/functions/getCategories")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Failed to fetch categories");
@@ -212,7 +212,7 @@ function DisplayCategories() {
 }
 
 function DisplayTodos() {
-  fetch("/todos")
+  fetch("/.netlify/functions/getTodos")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Failed to fetch todos");
@@ -276,13 +276,16 @@ function DisplayTodos() {
                 date: newDate.value,
               };
 
-              const response = await fetch(`/todos/${todo._id}`, {
-                method: "PUT",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(updatedTodo),
-              });
+              const response = await fetch(
+                `/.netlify/functions/updateTodo/${todo._id}`,
+                {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(updatedTodo),
+                }
+              );
 
               if (!response.ok) {
                 throw new Error("Failed to update todo");
@@ -302,9 +305,12 @@ function DisplayTodos() {
 
         deleteButton.addEventListener("click", async () => {
           try {
-            const response = await fetch(`/todos/${todo._id}`, {
-              method: "DELETE",
-            });
+            const response = await fetch(
+              `/.netlify/functions/deleteTodo/${todo._id}`,
+              {
+                method: "DELETE",
+              }
+            );
 
             if (!response.ok) {
               throw new Error("Failed to delete todo");
@@ -334,7 +340,7 @@ function DateTodaySetting() {
 }
 
 function CheckIfCategoryIsEmpty() {
-  fetch("/categories")
+  fetch("/.netlify/functions/getCategories")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Failed to fetch categories");
@@ -342,7 +348,7 @@ function CheckIfCategoryIsEmpty() {
       return response.json();
     })
     .then((categories) => {
-      fetch("/todos")
+      fetch("/.netlify/functions/getTodos")
         .then((response) => {
           if (!response.ok) {
             throw new Error("Failed to fetch todos");
@@ -385,13 +391,16 @@ async function handleClick(categoryId) {
   console.log(categoryId);
 
   try {
-    const response = await fetch(`/categories/${categoryId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ category: categoryId }),
-    });
+    const response = await fetch(
+      `/.netlify/functions/deleteCategory/${categoryId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ category: categoryId }),
+      }
+    );
     if (!response.ok) {
       throw new Error("Failed to delete category");
     }
