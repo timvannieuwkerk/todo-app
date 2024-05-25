@@ -1,0 +1,2 @@
+[build.lifecycle]
+  onSuccess = "node server.js"
