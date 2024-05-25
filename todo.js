@@ -364,7 +364,7 @@ function CheckIfCategoryIsEmpty() {
                 "click",
                 function handleClick() {
                   const categoryId = this.dataset.categoryId;
-                  handleClick(categoryId);
+                  deleteCategory(categoryId);
                 }
               );
             } else {
@@ -380,10 +380,8 @@ function CheckIfCategoryIsEmpty() {
 }
 
 async function handleClick(categoryId) {
-  console.log("Category clicked:", categoryId);
   const categoryOptionsTitlesNew =
     document.querySelectorAll(".to-do-category h4");
-  console.log(categoryId);
 
   try {
     const response = await fetch(`/.netlify/functions/deleteCategory`, {
@@ -396,7 +394,24 @@ async function handleClick(categoryId) {
     if (!response.ok) {
       throw new Error("Failed to delete category");
     }
-    console.log(`Category "${categoryId}" deleted successfully.`);
+    DisplayCategories();
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+async function deleteCategory(categoryId) {
+  try {
+    const response = await fetch(`/.netlify/functions/deleteCategory`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: categoryId }),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to delete category");
+    }
     DisplayCategories();
   } catch (error) {
     console.error("Error:", error);
