@@ -54,6 +54,7 @@ function UpdateNewCategory() {
     if (newCategoryName.value === "") {
       newCategoryMenu.classList.toggle("hidden");
     } else {
+      ToggleModel();
       try {
         const response = await fetch("/.netlify/functions/addCategory", {
           method: "POST",
@@ -71,6 +72,7 @@ function UpdateNewCategory() {
       } catch (error) {
         console.error("Error adding category:", error.message);
       }
+      ToggleModel();
     }
   });
 }
@@ -90,6 +92,7 @@ function OpenDateMenu() {
 
 async function addTodo(title, category, date) {
   try {
+    ToggleModel();
     const response = await fetch("/.netlify/functions/addTodo", {
       method: "POST",
       headers: {
@@ -104,6 +107,7 @@ async function addTodo(title, category, date) {
     DisplayTodos(); // Update todos display
   } catch (error) {
     console.error("Error adding todo:", error);
+    ToggleModel();
   }
 }
 
@@ -394,4 +398,10 @@ async function handleClick(event) {
   } catch (error) {
     console.error("Error:", error);
   }
+}
+
+function ToggleModel() {
+  const model = document.querySelector(".model");
+  model.classList.toggle("hidden");
+  console.log(model);
 }
