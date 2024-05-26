@@ -54,7 +54,6 @@ function UpdateNewCategory() {
     if (newCategoryName.value === "") {
       newCategoryMenu.classList.toggle("hidden");
     } else {
-      ToggleModel();
       try {
         const response = await fetch("/.netlify/functions/addCategory", {
           method: "POST",
@@ -72,7 +71,6 @@ function UpdateNewCategory() {
       } catch (error) {
         console.error("Error adding category:", error.message);
       }
-      ToggleModel();
     }
   });
 }
@@ -92,7 +90,6 @@ function OpenDateMenu() {
 
 async function addTodo(title, category, date) {
   try {
-    ToggleModel();
     const response = await fetch("/.netlify/functions/addTodo", {
       method: "POST",
       headers: {
@@ -105,7 +102,6 @@ async function addTodo(title, category, date) {
     }
     const data = await response.json();
     DisplayTodos(); // Update todos display
-    ToggleModel();
   } catch (error) {
     console.error("Error adding todo:", error);
   }
@@ -214,7 +210,6 @@ function DisplayCategories() {
 }
 
 function DisplayTodos() {
-  ToggleModel();
   fetch("/.netlify/functions/getTodos")
     .then((response) => {
       if (!response.ok) {
@@ -330,7 +325,6 @@ function DisplayTodos() {
     });
   CheckIfCategoryIsEmpty();
   DateTodaySetting();
-  ToggleModel();
 }
 
 // C: Other functions
@@ -342,7 +336,6 @@ function DateTodaySetting() {
 }
 
 function CheckIfCategoryIsEmpty() {
-  ToggleModel();
   fetch("/.netlify/functions/getCategories")
     .then((response) => {
       if (!response.ok) {
@@ -380,7 +373,6 @@ function CheckIfCategoryIsEmpty() {
           }
         });
     });
-  ToggleModel();
 }
 
 async function handleClick(event) {
@@ -401,14 +393,5 @@ async function handleClick(event) {
     DisplayCategories();
   } catch (error) {
     console.error("Error:", error);
-  }
-}
-
-function ToggleModel() {
-  const model = document.querySelector(".model");
-  if (model.classList.contains("hidden")) {
-    model.classList.remove("hidden");
-  } else {
-    model.classList.add("hidden");
   }
 }
