@@ -361,10 +361,7 @@ function CheckIfCategoryIsEmpty() {
               categoryOptionsTitlesNew[i].classList.add("red-delete");
               categoryOptionsTitlesNew[i].addEventListener(
                 "click",
-                function () {
-                  const categoryId = this.dataset.categoryId;
-                  handleClick(categoryId);
-                }
+                handleClick
               );
             } else {
               categoryOptionsTitlesNew[i].classList.remove("red-delete");
@@ -378,10 +375,10 @@ function CheckIfCategoryIsEmpty() {
     });
 }
 
-async function handleClick(categoryId) {
+async function handleClick(event) {
+  const categoryId = event.target.dataset.categoryId;
   const categoryOptionsTitlesNew =
     document.querySelectorAll(".to-do-category h4");
-
   try {
     const response = await fetch(`/.netlify/functions/deleteCategory`, {
       method: "DELETE",
