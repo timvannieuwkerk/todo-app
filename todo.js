@@ -354,7 +354,6 @@ function CheckIfCategoryIsEmpty() {
         .then((todos) => {
           const categoryOptionsTitlesNew =
             document.querySelectorAll(".to-do-category h4");
-          console.log(categoryOptionsTitlesNew);
 
           for (let i = 0; i < categoryOptionsTitlesNew.length; i++) {
             const categoryTitle = categoryOptionsTitlesNew[i].innerText;
@@ -380,10 +379,8 @@ function CheckIfCategoryIsEmpty() {
 }
 
 async function handleClick(categoryId) {
-  console.log("Category clicked:", categoryId);
   const categoryOptionsTitlesNew =
     document.querySelectorAll(".to-do-category h4");
-  console.log(categoryId);
 
   try {
     const response = await fetch(`/.netlify/functions/deleteCategory`, {
@@ -396,7 +393,6 @@ async function handleClick(categoryId) {
     if (!response.ok) {
       throw new Error("Failed to delete category");
     }
-    console.log(`Category "${categoryId}" deleted successfully.`);
     DisplayCategories();
   } catch (error) {
     console.error("Error:", error);
