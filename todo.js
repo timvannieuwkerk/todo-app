@@ -105,9 +105,9 @@ async function addTodo(title, category, date) {
     }
     const data = await response.json();
     DisplayTodos(); // Update todos display
+    ToggleModel();
   } catch (error) {
     console.error("Error adding todo:", error);
-    ToggleModel();
   }
 }
 
@@ -214,6 +214,7 @@ function DisplayCategories() {
 }
 
 function DisplayTodos() {
+  ToggleModel();
   fetch("/.netlify/functions/getTodos")
     .then((response) => {
       if (!response.ok) {
@@ -329,6 +330,7 @@ function DisplayTodos() {
     });
   CheckIfCategoryIsEmpty();
   DateTodaySetting();
+  ToggleModel();
 }
 
 // C: Other functions
@@ -340,6 +342,7 @@ function DateTodaySetting() {
 }
 
 function CheckIfCategoryIsEmpty() {
+  ToggleModel();
   fetch("/.netlify/functions/getCategories")
     .then((response) => {
       if (!response.ok) {
@@ -377,6 +380,7 @@ function CheckIfCategoryIsEmpty() {
           }
         });
     });
+  ToggleModel();
 }
 
 async function handleClick(event) {
@@ -402,6 +406,9 @@ async function handleClick(event) {
 
 function ToggleModel() {
   const model = document.querySelector(".model");
-  model.classList.toggle("hidden");
-  console.log(model);
+  if (model.classList.contains("hidden")) {
+    model.classList.remove("hidden");
+  } else {
+    model.classList.add("hidden");
+  }
 }
